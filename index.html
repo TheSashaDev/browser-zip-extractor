@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zip File Extractor</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            font-family: monospace;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            overflow: auto;
+            max-height: 300px; /* Added max-height and overflow */
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Important for consistent sizing */
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Zip File Extractor</h1>
+        <input type="file" id="zipFileInput" accept=".zip">
+        <div id="output"></div>
+        <textarea id="combinedOutput" placeholder="Extracted content will appear here..."></textarea>
+        <button id="copyButton">Copy to Clipboard</button>
+    </div>
+
+
+    <script>
+        // Use a CDN for JSZip for simplicity and reliability.
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        document.head.appendChild(script);
+
+        script.onload = () => { // Ensure JSZip is loaded before using it
+            const zipFileInput = document.getElementById('zipFileInput');
+            const outputDiv = document.getElementById('output');
+            const combinedOutput = document.getElementById('combinedOutput');
+            const copyButton = document.getElementById('copyButton');
+            let allContent = "";
+
+
+            zipFileInput.addEventListener('change', async (event) => {
+                outputDiv.textContent = ''; // Clear previous output
+                allContent = ""; //reset content
+                combinedOutput.value = "";
+
+                const file = event.target.files[0];
+                if (!file) {
+                    return;
+                }
+
+                try {
+                    const zip = await JSZip.loadAsync(file);
+
+                    // Iterate through each file/folder in the zip
+                    for (const relativePath in zip.files) {
+                        const zipEntry = zip.files[relativePath];
+
+                        if (!zipEntry.dir) { // Process only files (not directories)
+                            const content = await zipEntry.async('string');
+                            const entryOutput = `${relativePath}:\n\`\`\`\n${content}\n\`\`\`\n\n`;
+                            outputDiv.textContent += entryOutput; //display each entry
+                            allContent += entryOutput; //append all entries to one string
+                        }
+                    }
+                    combinedOutput.value = allContent; //put everything in text area
+                } catch (error) {
+                    outputDiv.textContent = `Error reading zip file: ${error.message}`;
+                    console.error("Error reading zip file:", error);
+                }
+            });
+
+            copyButton.addEventListener('click', () => {
+                combinedOutput.select();
+                document.execCommand('copy');
+                alert("Content copied to clipboard!");
+            });
+        };
+    </script>
+</body>
+</html>
