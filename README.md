@@ -9,9 +9,7 @@ A small client-side utility for opening ZIP archives directly in the browser.
 - Static HTML/CSS/JavaScript implementation.
 
 ### Screenshots
-![Screenshot 1](docs/screenshots/01-home.png)
-![Screenshot 2](docs/screenshots/02-upload-area.png)
-![Screenshot 3](docs/screenshots/03-output-panel.png)
+
 
 ### Run locally
 Use any static file server and open the project in a browser. Example: Python built-in HTTP server on port 8000.
@@ -25,9 +23,9 @@ Use any static file server and open the project in a browser. Example: Python bu
 - Static HTML/CSS/JavaScript implementation.
 
 ### Скриншоты
-![Screenshot 1](docs/screenshots/01-home.png)
-![Screenshot 2](docs/screenshots/02-upload-area.png)
-![Screenshot 3](docs/screenshots/03-output-panel.png)
+![Main interface](docs/screenshots/01-home.png)
+![Extracted output](docs/screenshots/03-output-panel.png)
+
 
 ### Локальный запуск
 Запусти любой статический HTTP-сервер и открой проект в браузере. Например, встроенный Python HTTP server на порту 8000.
@@ -41,9 +39,6 @@ Use any static file server and open the project in a browser. Example: Python bu
 - Static HTML/CSS/JavaScript implementation.
 
 ### Скріншоти
-![Screenshot 1](docs/screenshots/01-home.png)
-![Screenshot 2](docs/screenshots/02-upload-area.png)
-![Screenshot 3](docs/screenshots/03-output-panel.png)
 
 ### Локальний запуск
 Запусти будь-який статичний HTTP-сервер і відкрий проєкт у браузері. Наприклад, вбудований Python HTTP server на порту 8000.
